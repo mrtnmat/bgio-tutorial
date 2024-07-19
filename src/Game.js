@@ -1,50 +1,64 @@
 import { INVALID_MOVE } from 'boardgame.io/core';
 
 export const TicTacToe = {
-    setup: () => ({ cells: Array(9).fill(null) }),
+    setup: () => ({
+        cells: Array(9).fill(null),
+        coins: {
+            '0': 10,
+            '1': 10
+        },
+        lastBid: 0,
+    }),
 
     turn: {
         activePlayers: {
-
+            currentPlayer: 'placeBid'
         },
         stages: {
-            bid: {
-                //moves: { DiscardCard },
-            },
-            play: {
+            'playing': {
                 moves: {
-                    clickCell: ({ G, playerID }, id) => {
-                        if (G.cells[id] !== null) {
-                            return INVALID_MOVE;
-                        }
-                        G.cells[id] = playerID;
+                    clickCell: ({ G, ctx, events, playerID }, id) => {
+                        if (G.cells[id] !== null) return INVALID_MOVE
+                        let player = ctx.playOrder[playerID]
+                        G.cells[id] = player
+                        events.endTurn({ next: player })
+                    },
+                }
+            },
+            'placeBid': {
+                moves: {
+                    placeBid: ({ events }) => {
+                        events.setActivePlayers({
+                            others: 'answerBid',
+                        })
+                    }
+                },
+            },
+            'answerBid': {
+                moves: {
+                    acceptBid: ({ ctx, playerID, events }) => {
+                        ctx.nextPlayer = playerID
+                        events.setActivePlayers({
+                            currentPlayer: 'playing',
+                        })
+                    },
+                    refuseBid: ({ ctx, events }) => {
+                        ctx.nextPlayer = ctx.currentPlayer
+                        events.setActivePlayers({
+                            others: 'playing',
+                        })
                     },
                 },
-
-
-            }
-        },
-
-        phases: {
-            draw: {
-                moves: { DrawCard },
             },
-
-            play: {
-                moves: { PlayCard },
-            },
-        },
-
-        minMoves: 1,
-        maxMoves: 1,
+        }
     },
 
     endIf: ({ G, ctx }) => {
         if (IsVictory(G.cells)) {
-            return { winner: ctx.currentPlayer };
+            return { winner: ctx.currentPlayer }
         }
         if (IsDraw(G.cells)) {
-            return { draw: true };
+            return { draw: true }
         }
     },
 };
