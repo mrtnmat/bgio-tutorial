@@ -37,13 +37,11 @@ export const TicTacToe = {
             'answerBid': {
                 moves: {
                     acceptBid: ({ ctx, playerID, events }) => {
-                        ctx.nextPlayer = playerID
                         events.setActivePlayers({
                             currentPlayer: 'playing',
                         })
                     },
                     refuseBid: ({ ctx, events }) => {
-                        ctx.nextPlayer = ctx.currentPlayer
                         events.setActivePlayers({
                             others: 'playing',
                         })
