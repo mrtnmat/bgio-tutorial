@@ -27,7 +27,8 @@ export const TicTacToe = {
             },
             'placeBid': {
                 moves: {
-                    placeBid: ({ G, ctx, events }, amount) => {
+                    placeBid: ({ ctx, events }, amount) => {
+
                         ctx.lastBid = amount
                         events.setActivePlayers({
                             others: 'answerBid',
@@ -37,12 +38,29 @@ export const TicTacToe = {
             },
             'answerBid': {
                 moves: {
-                    acceptBid: ({ ctx, playerID, events }) => {
+                    acceptBid: ({ G, ctx, playerID, events }) => {
+                        let player = ctx.playOrder[playerID]
+                        let otherPlayer = player === '0' ? '1' : '0'
+
+                        if (ctx.lastBid > G.coins[player]) {
+                            alert('not enough coins')
+                            return INVALID_MOVE
+                        }
+
+                        G.coins[player] -= ctx.lastBid
+                        G.coins[otherPlayer] += ctx.lastBid
+
                         events.setActivePlayers({
                             others: 'playing',
                         })
                     },
-                    refuseBid: ({ ctx, events }) => {
+                    refuseBid: ({ G, ctx, playerID, events }) => {
+                        let player = ctx.playOrder[playerID]
+                        let otherPlayer = player === '0' ? '1' : '0'
+
+                        G.coins[player] += ctx.lastBid
+                        G.coins[otherPlayer] -= ctx.lastBid
+
                         events.setActivePlayers({
                             currentPlayer: 'playing',
                         })

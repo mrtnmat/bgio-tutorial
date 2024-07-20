@@ -37,6 +37,7 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
         if (ctx.activePlayers) {
             let ele = BidBox({
                 stageName: ctx.activePlayers[playerID],
+                coins: G.coins[playerID],
                 ctx,
                 moves,
             })
