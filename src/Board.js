@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlaceBidForm, RespondBidBox, YourTurn, OpponentTurn } from './Components';
+import { BidBox, CoinBox } from './Components';
 
 export function TicTacToeBoard({ ctx, G, moves, playerID }) {
     const onClick = (id) => moves.clickCell(id);
@@ -35,37 +35,19 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
 
     const BiddingMenu = () => {
         if (ctx.activePlayers) {
-            let ele = undefined
-            switch (ctx.activePlayers[playerID]) {
-                case undefined:
-                    ele = OpponentTurn
-                    break;
-                case 'placeBid':
-                    ele = PlaceBidForm(moves.placeBid)
-                    break;
-                case 'answerBid':
-                    ele = RespondBidBox({
-                        currentBid: ctx.lastBid,
-                        moves: {
-                            forfait: moves.refuseBid,
-                            accept: moves.acceptBid,
-                        },
-                    })
-                    break;
-                case 'playing':
-                    ele = YourTurn
-                    break;
-                default:
-                    ele = <div>ERROR</div>
-                    break;
-            }
+            let ele = BidBox({
+                stageName: ctx.activePlayers[playerID],
+                ctx,
+                moves,
+            })
             return ele
         }
     }
 
     return (
         <div className='h-full'>
-            < div className='flex flex-row w-full h-full'>
+            <CoinBox coins={G.coins[playerID]} />
+            <div className='flex flex-row w-full h-full'>
                 <table id="board">
                     <tbody>{tbody}</tbody>
                 </table>
