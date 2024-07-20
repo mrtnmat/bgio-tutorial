@@ -1,5 +1,5 @@
 import React from 'react';
-import { PlaceBidForm, RespondBidBox, YourTurn, OpponentTurn } from './C1';
+import { PlaceBidForm, RespondBidBox, YourTurn, OpponentTurn } from './Components';
 
 export function TicTacToeBoard({ ctx, G, moves, playerID }) {
     const onClick = (id) => moves.clickCell(id);
