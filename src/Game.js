@@ -8,6 +8,7 @@ export const TicTacToe = {
             '1': 10
         },
         lastBid: 0,
+        drawWinner: undefined
     }),
 
     turn: {
@@ -50,9 +51,15 @@ export const TicTacToe = {
                         G.coins[player] -= ctx.lastBid
                         G.coins[otherPlayer] += ctx.lastBid
 
-                        events.setActivePlayers({
-                            others: 'playing',
-                        })
+                        if (!G.drawWinner) {
+                            G.drawWinner = player
+                            events.endTurn({ next: player })
+                        }
+                        else {
+                            events.setActivePlayers({
+                                others: 'playing',
+                            })
+                        }
                     },
                     refuseBid: ({ G, ctx, playerID, events }) => {
                         let player = ctx.playOrder[playerID]
@@ -61,9 +68,15 @@ export const TicTacToe = {
                         G.coins[player] += ctx.lastBid
                         G.coins[otherPlayer] -= ctx.lastBid
 
-                        events.setActivePlayers({
-                            currentPlayer: 'playing',
-                        })
+                        if (!G.drawWinner) {
+                            G.drawWinner = otherPlayer
+                            events.endTurn({ next: player })
+                        }
+                        else {
+                            events.setActivePlayers({
+                                currentPlayer: 'playing',
+                            })
+                        }
                     },
                 },
             },
@@ -75,7 +88,7 @@ export const TicTacToe = {
             return { winner: ctx.currentPlayer }
         }
         if (IsDraw(G.cells)) {
-            return { draw: true }
+            return { winner: G.drawWinner }
         }
     },
 };

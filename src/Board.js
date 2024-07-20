@@ -21,11 +21,11 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
         for (let j = 0; j < 3; j++) {
             const id = 3 * i + j;
             cells.push(
-                <td key={id}>
+                <td key={id} className='text-3xl'>
                     {G.cells[id] ? (
-                        <div className='h-14 text-center border border-black aspect-square'>{G.cells[id]}</div>
+                        <div className='flex flex-col justify-center h-20 text-center border border-black aspect-square'>{G.cells[id]}</div>
                     ) : (
-                        <button className='h-14 text-center bg-gray-50 border border-black aspect-square' onClick={() => onClick(id)} />
+                        <button className='flex flex-col justify-center h-20 text-center border border-black aspect-square' onClick={() => onClick(id)} />
                     )}
                 </td>
             );
@@ -40,6 +40,8 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
                 coins: G.coins[playerID],
                 ctx,
                 moves,
+                G,
+                playerID,
             })
             return ele
         }
@@ -47,14 +49,13 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
 
     return (
         <div className='h-full'>
-            <CoinBox coins={G.coins[playerID]} />
-            <div className='flex flex-row w-full h-full'>
+            <CoinBox coins={G.coins[playerID]} drawWinner={G.drawWinner} />
+            <div className='flex flex-row justify-around w-full h-full'>
                 <table id="board">
                     <tbody>{tbody}</tbody>
                 </table>
                 <BiddingMenu />
             </div >
-            {winner}
         </div>
     );
 }
