@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/bgio-tutorial/static/css/main.a42ec619.css",
+    "main.js": "/bgio-tutorial/static/js/main.089512e4.js",
+    "static/js/453.b080dd3e.chunk.js": "/bgio-tutorial/static/js/453.b080dd3e.chunk.js",
+    "index.html": "/bgio-tutorial/index.html",
+    "main.a42ec619.css.map": "/bgio-tutorial/static/css/main.a42ec619.css.map",
+    "main.089512e4.js.map": "/bgio-tutorial/static/js/main.089512e4.js.map",
+    "453.b080dd3e.chunk.js.map": "/bgio-tutorial/static/js/453.b080dd3e.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.a42ec619.css",
+    "static/js/main.089512e4.js"
+  ]
+}
