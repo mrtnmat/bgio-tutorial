@@ -3,7 +3,7 @@ import { useState } from 'react';
 export const CoinBox = ({ coins, drawWinner }) => {
   return (
     <div className='flex flex-row justify-around px-48 w-full text-xl text-center'>
-      <div>COINS: {coins}</div>
+      <div><p>COINS: {coins}</p><p>OPPONENT COINS: {20 - coins}</p></div>
       {drawWinner ? <div>Player {drawWinner} will win draws</div> : <div></div>}
     </div>
   )
@@ -68,7 +68,7 @@ const PlaceBidForm = ({ limit, moves, drawWinner }) => {
 
   return (
     <form onSubmit={confirmBid}>
-      <div className="flex flex-col justify-around items-center w-60 h-full shadow" >
+      <div className="flex flex-col justify-around items-center w-60 h-60 shadow" >
         {drawWinner ? '' : 'Place bid for draw winner'}
         <label htmlFor="bidAmount">Bid Amount</label>
         <input type="number" min="0" max={limit} step="1" required value={bid} onChange={handleChange} onInvalid={handleInvalid} id="bidAmount"></input>
@@ -88,7 +88,7 @@ const RespondBidBox = ({ currentBid, moves, coins }) => {
     moves.forfait()
   }
   return (
-    <div className="flex flex-col justify-around items-center w-60 h-full shadow">
+    <div className="flex flex-col justify-around items-center w-60 h-60 shadow">
       <div>Bid: {currentBid}</div>
       <button className="w-28 enabled:shadow disabled:text-slate-200" onClick={handleAccept} disabled={coins < currentBid}>Pay Bid</button>
       <button className="w-28 shadow" onClick={handleForfait}>Forfait Turn</button>
@@ -97,20 +97,20 @@ const RespondBidBox = ({ currentBid, moves, coins }) => {
 }
 
 const OpponentTurn = (
-  <div className="flex flex-col justify-around items-center w-60 h-full shadow">
+  <div className="flex flex-col justify-around items-center w-60 h-60 shadow">
     <div>Opponent's Turn!</div>
   </div>
 )
 
 const YourTurn = (
-  <div className="flex flex-col justify-around items-center w-60 h-full shadow">
+  <div className="flex flex-col justify-around items-center w-60 h-60 shadow">
     <div>Your Turn!</div>
   </div>
 )
 
 const GameResult = ({ result }) => {
   return (
-    <div className="flex flex-col justify-around items-center w-60 h-full shadow" >
+    <div className="flex flex-col justify-around items-center w-60 h-60 shadow" >
       <div className="text-xl">Player {result.winner} wins</div>
     </div>
   )

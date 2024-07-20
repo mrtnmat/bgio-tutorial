@@ -4,17 +4,6 @@ import { BidBox, CoinBox } from './Components';
 export function TicTacToeBoard({ ctx, G, moves, playerID }) {
     const onClick = (id) => moves.clickCell(id);
 
-    let winner = '';
-    if (ctx.gameover) {
-        winner =
-            ctx.gameover.winner !== undefined ? (
-                <div id="winner">Winner: {ctx.gameover.winner}</div>
-            ) : (
-                <div id="winner">Draw!</div>
-            );
-    }
-
-
     let tbody = [];
     for (let i = 0; i < 3; i++) {
         let cells = [];
@@ -48,10 +37,13 @@ export function TicTacToeBoard({ ctx, G, moves, playerID }) {
     }
 
     return (
-        <div className='h-full'>
-            <CoinBox coins={G.coins[playerID]} drawWinner={G.drawWinner} />
-            <div className='flex flex-row justify-around w-full h-full'>
-                <table id="board">
+        <div className='justify-around h-full'>
+            <div className='m-8 h-40 text-xl'>
+                <div className='text-center'>You are Player {ctx.playOrder[playerID]}!</div>
+                <CoinBox coins={G.coins[playerID]} drawWinner={G.drawWinner} />
+            </div>
+            <div className='flex flex-row justify-around w-full h-62'>
+                <table id="board" >
                     <tbody>{tbody}</tbody>
                 </table>
                 <BiddingMenu />
