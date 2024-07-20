@@ -10,8 +10,7 @@ const TicTacToeClient = Client({
 });
 
 const App = () => (
-  <div>
-    <div class="w-full bg-red-500 h-4"></div>
+  <div className='h-full flex flex-col justify-around'>
     <TicTacToeClient playerID="0" />
     <TicTacToeClient playerID="1" />
   </div>

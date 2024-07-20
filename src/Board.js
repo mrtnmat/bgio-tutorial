@@ -1,6 +1,7 @@
 import React from 'react';
+import { PlaceBidForm, RespondBidBox, YourTurn, OpponentTurn } from './C1';
 
-export function TicTacToeBoard({ ctx, G, moves }) {
+export function TicTacToeBoard({ ctx, G, moves, playerID }) {
     const onClick = (id) => moves.clickCell(id);
 
     let winner = '';
@@ -13,13 +14,6 @@ export function TicTacToeBoard({ ctx, G, moves }) {
             );
     }
 
-    const cellStyle = {
-        border: '1px solid #555',
-        width: '50px',
-        height: '50px',
-        lineHeight: '50px',
-        textAlign: 'center',
-    };
 
     let tbody = [];
     for (let i = 0; i < 3; i++) {
@@ -29,9 +23,9 @@ export function TicTacToeBoard({ ctx, G, moves }) {
             cells.push(
                 <td key={id}>
                     {G.cells[id] ? (
-                        <div style={cellStyle}>{G.cells[id]}</div>
+                        <div className='h-14 text-center border border-black aspect-square'>{G.cells[id]}</div>
                     ) : (
-                        <button style={cellStyle} onClick={() => onClick(id)} />
+                        <button className='h-14 text-center bg-gray-50 border border-black aspect-square' onClick={() => onClick(id)} />
                     )}
                 </td>
             );
@@ -39,11 +33,44 @@ export function TicTacToeBoard({ ctx, G, moves }) {
         tbody.push(<tr key={i}>{cells}</tr>);
     }
 
+    const BiddingMenu = () => {
+        if (ctx.activePlayers) {
+            let ele = undefined
+            switch (ctx.activePlayers[playerID]) {
+                case undefined:
+                    ele = OpponentTurn
+                    break;
+                case 'placeBid':
+                    ele = PlaceBidForm(moves.placeBid)
+                    break;
+                case 'answerBid':
+                    ele = RespondBidBox({
+                        currentBid: ctx.lastBid,
+                        moves: {
+                            forfait: moves.refuseBid,
+                            accept: moves.acceptBid,
+                        },
+                    })
+                    break;
+                case 'playing':
+                    ele = YourTurn
+                    break;
+                default:
+                    ele = <div>ERROR</div>
+                    break;
+            }
+            return ele
+        }
+    }
+
     return (
-        <div>
-            <table id="board">
-                <tbody>{tbody}</tbody>
-            </table>
+        <div className='h-full'>
+            < div className='flex flex-row w-full h-full'>
+                <table id="board">
+                    <tbody>{tbody}</tbody>
+                </table>
+                <BiddingMenu />
+            </div >
             {winner}
         </div>
     );

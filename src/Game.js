@@ -27,7 +27,8 @@ export const TicTacToe = {
             },
             'placeBid': {
                 moves: {
-                    placeBid: ({ events }) => {
+                    placeBid: ({ G, ctx, events }, amount) => {
+                        ctx.lastBid = amount
                         events.setActivePlayers({
                             others: 'answerBid',
                         })
@@ -38,12 +39,12 @@ export const TicTacToe = {
                 moves: {
                     acceptBid: ({ ctx, playerID, events }) => {
                         events.setActivePlayers({
-                            currentPlayer: 'playing',
+                            others: 'playing',
                         })
                     },
                     refuseBid: ({ ctx, events }) => {
                         events.setActivePlayers({
-                            others: 'playing',
+                            currentPlayer: 'playing',
                         })
                     },
                 },
