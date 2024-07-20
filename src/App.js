@@ -9,7 +9,7 @@ const TicTacToeClient = Client({
   numPlayers: 2,
   board: TicTacToeBoard,
   // multiplayer: Local(),
-  multiplayer: SocketIO({ server: 'localhost:9999' }),
+  multiplayer: SocketIO({ server: 'https://oodanuki.hopto.org:9999' }),
   debug: {
     collapseOnLoad: true
   }

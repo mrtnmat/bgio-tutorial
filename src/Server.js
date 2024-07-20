@@ -3,7 +3,7 @@ const { TicTacToe } = require('./Game');
 
 const server = Server({
   games: [TicTacToe],
-  origins: [Origins.LOCALHOST],
+  origins: ['https://mrtnmat.github.io', Origins.LOCALHOST],
 });
 
 server.run(9999);

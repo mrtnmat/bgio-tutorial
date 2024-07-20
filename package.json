@@ -1,5 +1,6 @@
 {
   "name": "bgio-tutorial",
+  "homepage": "https://mrtnmat.github.io/bgio-tutorial/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "serve": "node -r esm src/server.js"
+    "serve": "node -r esm src/server.js",
+    "deploy": "gh-pages -d build -f -b gh"
   },
   "eslintConfig": {
     "extends": [
@@ -41,6 +43,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^10.4.19",
+    "gh-pages": "^6.1.1",
     "postcss": "^8.4.39",
     "tailwindcss": "^3.4.6"
   }
